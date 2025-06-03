@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Sửa Thông Tin Học Sinh</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    form {
+      margin: 0 auto;
+      width: 400px;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      text-align: left;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .btn-cancel {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .btn-submit {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .actions button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .actions button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <h2>Sửa Thông Tin Học Sinh</h2>
+
+  <form method="POST" action="/edit-student/<%= student.id %>">
+    <label for="name">Họ và Tên</label>
+    <input type="text" id="name" name="name" value="<%= student.name %>" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" value="<%= student.email %>" required>
+
+    <label for="city">Tỉnh / Thành phố</label>
+    <input type="text" id="city" name="city" value="<%= student.city %>" required>
+
+    <div class="actions">
+      <a href="/users"><button type="button" class="btn-cancel">Hủy</button></a>
+      <button type="submit" class="btn-submit">Lưu</button>
+    </div>
+  </form>
+</body>
+</html>

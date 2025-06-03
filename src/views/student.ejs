@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  
+  <title>Danh Sách Học Sinh</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .add-button {
+      display: inline-block;
+      margin: 20px 0;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .add-button:hover {
+      background-color: #0056b3;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ccc;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .page-link {
+      padding: 8px 12px;
+      border: 1px solid #007BFF;
+      color: #007BFF;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    .page-link:hover {
+      background-color: #007BFF;
+      color: white;
+    }
+    .page-link.active {
+      background-color: #007BFF;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Danh Sách Học Sinh</h1>
+<form action="/users" method="GET" style="margin-bottom: 20px; text-align: center;">
+  <input type="text" name="search" placeholder="Tìm kiếm theo tên hoặc email..." 
+         value="<%= typeof search !== 'undefined' ? search : '' %>" 
+         style="padding: 8px; width: 300px; border: 1px solid #ccc; border-radius: 4px;">
+  <button type="submit" style="padding: 8px 16px; background-color: #28a745; color: white; border: none; border-radius: 4px;">Tìm kiếm</button>
+</form>
+
+  <!-- Nút thêm học sinh -->
+  <a href="/add-student" class="add-button">+ Thêm Học Sinh</a>
+
+  <table>
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Họ và Tên</th>
+        <th>Email</th>
+        <th>Tỉnh</th>
+        <th>Hành Động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let sp of students) { %>
+        <tr>
+          <td><%= sp.id %></td>
+          <td><%= sp.name %></td>
+          <td><%= sp.email %></td>
+          <td><%= sp.city %></td>
+          <td>
+            <a href="/edit-student/<%= sp.id %>">Sửa</a>
+            <a href="/delete-student/<%= sp.id %>" onclick="return confirm('Bạn có chắc chắn muốn xóa học sinh này?');">Xóa</a>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+
+  <!-- Phân trang -->
+  <div class="pagination" style="margin-top: 20px; text-align: center;">
+    <% if (hasPrevPage) { %>
+      <a href="/users?page=<%= currentPage - 1 %>" class="page-link">&laquo; Trang trước</a>
+    <% } %>
+    
+    <% for(let i = 1; i <= totalPages; i++) { %>
+      <a href="/users?page=<%= i %>" 
+         class="page-link <%= i === currentPage ? 'active' : '' %>">
+         <%= i %>
+      </a>
+    <% } %>
+    
+    <% if (hasNextPage) { %>
+      <a href="/users?page=<%= currentPage + 1 %>" class="page-link">Trang sau &raquo;</a>
+    <% } %>
+  </div>
+</body>
+</html>

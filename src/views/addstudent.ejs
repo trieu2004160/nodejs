@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thêm Học Sinh</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .add-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .add-button:hover {
+      background-color: #0056b3;
+    }
+
+    dialog {
+      padding: 20px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      width: 400px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    input {
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .actions {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .btn-cancel {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .btn-submit {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .actions button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .actions button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <h2>Thêm Học Sinh Mới</h2>
+
+  <!-- Nút mở form -->
+  <button class="add-button" onclick="document.getElementById('studentDialog').showModal()">+ Thêm Học Sinh</button>
+
+  <!-- Form trong dialog -->
+  <dialog id="studentDialog">
+    <form method="POST" action="/add-student">
+      <h3>Thông Tin Học Sinh</h3>
+
+      <label for="name">Họ và Tên</label>
+      <input type="text" name="name" id="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" required />
+
+      <label for="city">Tỉnh / Thành phố</label>
+      <input type="text" name="city" id="city" required />
+
+      <div class="actions">
+        <button type="button" class="btn-cancel" onclick="document.getElementById('studentDialog').close()">Hủy</button>
+        <a ><button type="submit" class="btn-submit">Lưu</button></a>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
