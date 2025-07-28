@@ -1,24 +1,23 @@
-const connection = require("../config/database");
+// const connection = require("../config/database");
 
 const addstudent = (req, res) => {
   res.render("addstudent");
 };
-
-const saveStudent = (req, res) => {
+const User = require("../models/User");
+const saveStudent = async (req, res) => {
+  let result = await User.findOne({ email: req.body.email });
+  if (result) {
+    return res.status(400).send("Email already exists");
+  }
+  console.log(req.body);
   const { name, email, city } = req.body;
-  console.log("Body", req.body);
-  connection.query(
-    "INSERT INTO Users (name, email, city) VALUES (?, ?, ?)",
-    [name, email, city],
-    (err, results) => {
-      if (err) {
-        console.error("Error inserting data:", err);
-        return res.status(500).send("Error inserting data");
-      }
-      console.log("Data inserted successfully:", results);
-      res.redirect("/users"); // Redirect to the user list after saving
-    }
-  );
+  try {
+    await User.create({ name, email, city });
+    res.redirect("/users");
+  } catch (err) {
+    console.error("Error inserting data:", err);
+    res.status(500).send("Error inserting data");
+  }
 };
 
 module.exports = {

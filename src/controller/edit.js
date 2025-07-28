@@ -1,34 +1,31 @@
-const connection = require("../config/database");
+const User = require("../models/User");
 
 // Hiển thị form sửa học sinh
-const showEditForm = (req, res) => {
+const showEditForm = async (req, res) => {
   const studentId = req.params.id;
-  const sql = "SELECT * FROM Users WHERE id = ?";
-  connection.query(sql, [studentId], (err, results) => {
-    if (err) {
-      console.error("Lỗi khi truy vấn:", err);
-      return res.status(500).send("Lỗi server");
-    }
-    if (results.length === 0) {
+  try {
+    const student = await User.findById(studentId);
+    if (!student) {
       return res.status(404).send("Không tìm thấy học sinh");
     }
-    res.render("edit", { student: results[0] });
-  });
+    res.render("edit", { student });
+  } catch (err) {
+    console.error("Lỗi khi truy vấn:", err);
+    res.status(500).send("Lỗi server");
+  }
 };
 
 // Xử lý lưu thông tin đã sửa
-const updateStudent = (req, res) => {
+const updateStudent = async (req, res) => {
   const studentId = req.params.id;
   const { name, email, city } = req.body;
-
-  const sql = "UPDATE Users SET name = ?, email = ?, city = ? WHERE id = ?";
-  connection.query(sql, [name, email, city, studentId], (err, result) => {
-    if (err) {
-      console.error("Lỗi khi cập nhật:", err);
-      return res.status(500).send("Lỗi server");
-    }
+  try {
+    await User.findByIdAndUpdate(studentId, { name, email, city });
     res.redirect("/users");
-  });
+  } catch (err) {
+    console.error("Lỗi khi cập nhật:", err);
+    res.status(500).send("Lỗi server");
+  }
 };
 
 module.exports = {

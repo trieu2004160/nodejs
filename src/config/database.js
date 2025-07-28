@@ -1,6 +1,7 @@
+// Kết nối MongoDB
 const mongoose = require("mongoose");
 
-const connection = async () => {
+const mongoConnection = async () => {
   try {
     await mongoose.connect("mongodb://root:123456@localhost:27018", {
       useNewUrlParser: true,
@@ -13,4 +14,4 @@ const connection = async () => {
   }
 };
 
-module.exports = connection;
+module.exports = mongoConnection;

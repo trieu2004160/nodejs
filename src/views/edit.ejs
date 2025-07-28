@@ -69,7 +69,7 @@
 <body>
   <h2>Sửa Thông Tin Học Sinh</h2>
 
-  <form method="POST" action="/edit-student/<%= student.id %>">
+  <form method="POST" action="/edit-student/<%= student._id %>">
     <label for="name">Họ và Tên</label>
     <input type="text" id="name" name="name" value="<%= student.name %>" required>
 
